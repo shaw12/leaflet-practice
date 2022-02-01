@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react'
-import { Marker, Popup, useMapEvents } from 'react-leaflet'
+import React, { useState, useRef, useEffect } from 'react'
+import { Marker, useMapEvents } from 'react-leaflet'
 import L from 'leaflet';
 
 function LocationMarker({ type }) {
@@ -9,6 +9,15 @@ function LocationMarker({ type }) {
       latLang: [51.505, -0.09]
     }]);
     const markerRef = useRef(null);
+
+    useEffect(() => {
+      if(type === 'output') {
+        console.log('All positions are: ')
+        position.map((x) => {
+          console.log(x.color, x.latLang[0], x.latLang[1])
+        })
+      }
+    }, [type])
 
     const map = useMapEvents({
       click: (e) => {
@@ -29,9 +38,7 @@ function LocationMarker({ type }) {
 
         if(type === 'edit') {
           const filterArr = position.map(val => {
-            console.log(lat, lng, val.latLang)
             if (val.latLang[0].toFixed(3) == lat.toFixed(3) &&  val.latLang[1].toFixed(3) == lng.toFixed(3)) {
-              console.log('yooo')
               if (val.color === 'red') {
                 return {
                   ...val,
@@ -55,8 +62,7 @@ function LocationMarker({ type }) {
         }
       },
     });
-    
-    console.log(position)
+
     var redIcon = new L.Icon({
       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',

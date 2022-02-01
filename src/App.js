@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import './App.css';
 import LocationMarker from './components/LocationMarker';
 
 function App() {
   const [currentType, setCurrentType] = useState('output');
   const [position, setPosition] = useState([51.505, -0.09])
-
-  console.log('type', currentType);
 
   return (
     <div className="App">
@@ -37,7 +35,7 @@ function App() {
           Output
         </button>
       </main>
-      <MapContainer center={position} zoom={13} scrollWheelZoom={false} id="map" onClick={(e) => console.log(e.latlng, 'ip')}>
+      <MapContainer center={position} zoom={13} scrollWheelZoom={false} id="map">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
